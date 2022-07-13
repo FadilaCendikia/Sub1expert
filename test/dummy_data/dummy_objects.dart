@@ -1,12 +1,14 @@
+import 'package:ditonton/data/models/genre_model.dart';
 import 'package:ditonton/data/models/movie_table.dart';
-import 'package:ditonton/data/models/tv_series_table.dart';
+import 'package:ditonton/data/models/season_tv_series_model.dart';
+import 'package:ditonton/data/models/tv_series_detail_model.dart';
+import 'package:ditonton/data/models/tv_series_model.dart';
+import 'package:ditonton/data/models/tv_series_response.dart';
 import 'package:ditonton/data/models/tv_series_table.dart';
 import 'package:ditonton/domain/entities/genre.dart';
 import 'package:ditonton/domain/entities/movie.dart';
 import 'package:ditonton/domain/entities/movie_detail.dart';
-import 'package:ditonton/domain/entities/season_tv_series.dart';
 import 'package:ditonton/domain/entities/tv_series.dart';
-import 'package:ditonton/domain/entities/tv_series_detail.dart';
 
 final testMovie = Movie(
   adult: false,
@@ -15,7 +17,7 @@ final testMovie = Movie(
   id: 557,
   originalTitle: 'Spider-Man',
   overview:
-  'After being bitten by a genetically altered spider, nerdy high school student Peter Parker is endowed with amazing powers to become the Amazing superhero known as Spider-Man.',
+      'After being bitten by a genetically altered spider, nerdy high school student Peter Parker is endowed with amazing powers to become the Amazing superhero known as Spider-Man.',
   popularity: 60.441,
   posterPath: '/rweIrveL43TaxUN0akQEaAXL6x0.jpg',
   releaseDate: '2002-05-01',
@@ -25,25 +27,7 @@ final testMovie = Movie(
   voteCount: 13507,
 );
 
-final testTVSeries = TVSeries(
-  backdropPath: "/4g5gK5eGWZg8swIZl6eX2AoJp8S.jpg",
-  firstAirDate: "2003-10-21",
-  genreIds: [18],
-  id: 11250,
-  name: "Hidden Passion",
-  originCountry: ["CO"],
-  originalLanguage: "es",
-  originalName: "Pasión de gavilanes",
-  overview:
-  "The Reyes-Elizondo's idyllic lives are shattered by a murder charge against Eric and León.",
-  popularity: 1747.047,
-  posterPath: "/lWlsZIsrGVWHtBeoOeLxIKDd9uy.jpg",
-  voteAverage: 7.6,
-  voteCount: 1803,
-);
-
 final testMovieList = [testMovie];
-final testTVSeriesList = [testTVSeries];
 
 final testMovieDetail = MovieDetail(
   adult: false,
@@ -60,35 +44,6 @@ final testMovieDetail = MovieDetail(
   voteCount: 1,
 );
 
-final testTVSeriesDetail = TVSeriesDetail(
-  adult: false,
-  backdropPath: "/4g5gK5eGWZg8swIZl6eX2AoJp8S.jpg",
-  episodeRunTime: [42],
-  genres: [Genre(id: 18, name: 'Drama')],
-  homepage: "https://www.telemundo.com/shows/pasion-de-gavilanes",
-  id: 1,
-  name: "name",
-  numberOfEpisodes: 259,
-  numberOfSeasons: 2,
-  originalName: "Pasión de gavilanes",
-  overview: "overview",
-  popularity: 1747.047,
-  posterPath: "posterPath",
-  seasons: [
-    Season(
-      episodeCount: 188,
-      id: 72643,
-      name: "Season 1",
-      posterPath: "/elrDXqvMIX3EcExwCenQMVVmnvd.jpg",
-      seasonNumber: 1,
-    )
-  ],
-  status: "Returning Series",
-  type: "Scripted",
-  voteAverage: 7.6,
-  voteCount: 1803,
-);
-
 final testWatchlistMovie = Movie.watchlist(
   id: 1,
   title: 'title',
@@ -96,23 +51,9 @@ final testWatchlistMovie = Movie.watchlist(
   overview: 'overview',
 );
 
-final testWatchlistTVSeries = TVSeries.watchlist(
-  id: 1,
-  overview: 'overview',
-  posterPath: 'posterPath',
-  name: 'name',
-);
-
 final testMovieTable = MovieTable(
   id: 1,
   title: 'title',
-  posterPath: 'posterPath',
-  overview: 'overview',
-);
-
-final testTVSeriesTable = TVSeriesTable(
-  id: 1,
-  name: 'name',
   posterPath: 'posterPath',
   overview: 'overview',
 );
@@ -124,9 +65,117 @@ final testMovieMap = {
   'title': 'title',
 };
 
-final testTVSeriesMap = {
+final testTVSeriesModel = TVSeriesModel(
+    backdropPath: "/1qpUk27LVI9UoTS7S0EixUBj5aR.jpg",
+    firstAirDate: "2022-03-24",
+    genreIds: [10759, 10765],
+    id: 52814,
+    name: "Halo",
+    originCountry: ["US"],
+    originalLanguage: "en",
+    originalName: "Halo",
+    overview:
+        "Depicting an epic 26th-century conflict between humanity and an alien threat known as the Covenant, the series weaves deeply drawn personal stories with action, adventure and a richly imagined vision of the future.",
+    popularity: 7348.55,
+    posterPath: "/nJUHX3XL1jMkk8honUZnUmudFb9.jpg",
+    voteAverage: 8.7,
+    voteCount: 472);
+
+final testTVSeriesModelList = <TVSeriesModel>[testTVSeriesModel];
+
+final testTVSeries = testTVSeriesModel.toEntity();
+
+final testTVSeriesList = <TVSeries>[testTVSeries];
+
+final testTVSeriesResponse =
+    TVSeriesResponse(tvSeriesList: testTVSeriesModelList);
+
+final testTVSeriesDetailResponse = TVSeriesDetailResponse(
+  adult: false,
+  backdropPath: '',
+  genres: [GenreModel(id: 1, name: 'Action')],
+  id: 2,
+  episodeRunTime: [],
+  homepage: "https://google.com",
+  numberOfEpisodes: 34,
+  name: 'name',
+  numberOfSeasons: 2,
+  originalLanguage: 'en',
+  originalName: 'name',
+  overview: 'overview',
+  popularity: 12.323,
+  posterPath: '',
+  seasons: [
+    SeasonTVSeriesModel(
+      airDate: '',
+      episodeCount: 7,
+      id: 1,
+      name: 'Winter',
+      overview: 'overview',
+      posterPath: 'posterPath',
+      seasonNumber: 2,
+    )
+  ],
+  status: 'status',
+  tagline: 'tagline',
+  type: 'Scripted',
+  voteAverage: 3,
+  voteCount: 3,
+);
+
+final testTVSeriesDetailResponseEntity = testTVSeriesDetailResponse.toEntity();
+
+final testTVSeriesTable =
+    TVSeriesTable.fromEntity(testTVSeriesDetailResponseEntity);
+
+final testTVSeriesTableList = <TVSeriesTable>[testTVSeriesTable];
+
+final testWatchlistTVSeries = [testTVSeriesTable.toEntity()];
+
+final testTVSeriesMaping = {
   'id': 1,
   'overview': 'overview',
   'posterPath': 'posterPath',
   'name': 'name',
 };
+
+final testTVSeriesDetail = TVSeriesDetailResponse(
+  adult: false,
+  popularity: 1,
+  posterPath: 'posterPath',
+  name: 'name',
+  type: 'type',
+  numberOfEpisodes: 1,
+  numberOfSeasons: 1,
+  seasons: [],
+  episodeRunTime: [1],
+  genres: [],
+  id: 1,
+  overview: 'overview',
+  voteCount: 1,
+  tagline: 'tagline',
+  originalName: 'originalName',
+  homepage: 'homepage',
+  voteAverage: 1,
+  originalLanguage: 'originalLanguage',
+  backdropPath: 'backdropPath',
+  status: 'status',
+);
+
+final testTVSeriesDetailEntity = testTVSeriesDetail.toEntity();
+final testTVSeriesMap = testTVSeriesDetail.toJson();
+
+//seasons
+final testSeasonTVSeriesModel = SeasonTVSeriesModel(
+  id: 1,
+  name: 'season',
+  posterPath: 'poster',
+  episodeCount: 2,
+  seasonNumber: 2,
+  airDate: '',
+  overview: '',
+);
+
+final testSeason = testSeasonTVSeriesModel.toEntity();
+
+final testSeasonMap = testSeasonTVSeriesModel.toJson();

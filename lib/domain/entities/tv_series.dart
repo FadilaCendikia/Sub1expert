@@ -1,58 +1,66 @@
 import 'package:equatable/equatable.dart';
 
-class TVSeries extends Equatable{
-  int id;
-  int? voteCount;
-  String? name;
-  String? overview;
-  String? posterPath;
-  String? backdropPath;
-  String? firstAirDate;
-  String? originalName;
-  String? originalLanguage;
-  double? popularity;
-  double? voteAverage;
-  List<int>? genreIds;
-  List<String>? originCountry;
-
+// ignore: must_be_immutable
+class TVSeries extends Equatable {
   TVSeries({
-    required this.id,
-    required this.voteCount,
-    required this.name,
-    required this.overview,
-    required this.posterPath,
     required this.backdropPath,
     required this.firstAirDate,
-    required this.originalName,
-    required this.originalLanguage,
-    required this.voteAverage,
     required this.genreIds,
-    required this.originCountry,
-    required this.popularity,
-  });
-
-  @override
-  List<Object?> get props =>[
-    id,
-    voteCount,
-    name,
-    overview,
-    posterPath,
-    backdropPath,
-    firstAirDate,
-    originalName,
-    originalLanguage,
-    voteAverage,
-    genreIds,
-    originCountry,
-    popularity,
-  ];
-
-  TVSeries.watchlist({
     required this.id,
     required this.name,
+    required this.originCountry,
+    required this.originalLanguage,
+    required this.originalName,
     required this.overview,
+    required this.popularity,
     required this.posterPath,
+    required this.voteAverage,
+    required this.voteCount,
   });
 
+  TVSeries.watchlist({
+    this.backdropPath,
+    this.firstAirDate,
+    this.genreIds,
+    this.originCountry,
+    this.originalLanguage,
+    this.originalName,
+    this.popularity,
+    this.voteAverage,
+    this.voteCount,
+    required this.id,
+    required this.overview,
+    required this.posterPath,
+    required this.name,
+  });
+
+  String? backdropPath;
+  String? firstAirDate;
+  List<int>? genreIds;
+  int id;
+  String? name;
+  List<String>? originCountry;
+  String? originalLanguage;
+  String? originalName;
+  String? overview;
+  double? popularity;
+  String? posterPath;
+  double? voteAverage;
+  int? voteCount;
+
+  @override
+  List<Object?> get props => [
+        backdropPath,
+        genreIds,
+        id,
+        name,
+        originCountry,
+        originalLanguage,
+        originalName,
+        overview,
+        popularity,
+        posterPath,
+        voteAverage,
+        voteCount,
+      ];
 }

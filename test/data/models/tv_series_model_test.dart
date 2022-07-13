@@ -1,43 +1,44 @@
-
 import 'package:ditonton/data/models/tv_series_model.dart';
 import 'package:ditonton/domain/entities/tv_series.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  final tTvSeriesModel = TVSeriesModel(
+  final tTVSeriesModel = TVSeriesModel(
     backdropPath: 'backdropPath',
-    firstAirDate: "2021-09-03",
     genreIds: [1, 2, 3],
     id: 1,
+    overview: 'overview',
+    popularity: 1,
+    posterPath: 'posterPath',
+    voteAverage: 1,
+    voteCount: 1,
+    firstAirDate: 'firstAirDate',
     name: 'name',
-    originCountry: ["US"],
     originalLanguage: 'originalLanguage',
     originalName: 'originalName',
-    overview: 'overview',
-    popularity: 18.591,
-    posterPath: 'posterPath',
-    voteAverage: 9.4,
-    voteCount: 2710,
+    originCountry: [
+      'originCountry',
+    ],
   );
 
-  final tSeries = TVSeries(
+  final tTVSeries = TVSeries(
     backdropPath: 'backdropPath',
-    firstAirDate: "2021-09-03",
     genreIds: [1, 2, 3],
     id: 1,
+    overview: 'overview',
+    popularity: 1,
+    posterPath: 'posterPath',
+    voteAverage: 1,
+    voteCount: 1,
+    firstAirDate: 'firstAirDate',
     name: 'name',
-    originCountry: ["US"],
     originalLanguage: 'originalLanguage',
     originalName: 'originalName',
-    overview: 'overview',
-    popularity: 18.591,
-    posterPath: 'posterPath',
-    voteAverage: 9.4,
-    voteCount: 2710,
+    originCountry: ['originCountry'],
   );
 
-  test('should be a subclass of Movie entity', () async {
-    final result = tTvSeriesModel.toEntity();
-    expect(result, tSeries);
+  test('should be a subclass of TV Series entity', () async {
+    final result = tTVSeriesModel.toEntity();
+    expect(result, tTVSeries);
   });
 }

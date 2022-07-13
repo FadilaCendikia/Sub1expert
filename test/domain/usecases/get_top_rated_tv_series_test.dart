@@ -1,5 +1,3 @@
-
-
 import 'package:dartz/dartz.dart';
 import 'package:ditonton/domain/entities/tv_series.dart';
 import 'package:ditonton/domain/usecases/get_top_rated_tv_series.dart';
@@ -10,22 +8,22 @@ import '../../helpers/test_helper.mocks.dart';
 
 void main() {
   late GetTopRatedTVSeries usecase;
-  late MockTVSeriesRepository mockTvSeriesRepository;
+  late MockTVSeriesRepository mockTVSeriesRepository;
 
   setUp(() {
-    mockTvSeriesRepository = MockTVSeriesRepository();
-    usecase = GetTopRatedTVSeries(mockTvSeriesRepository);
+    mockTVSeriesRepository = MockTVSeriesRepository();
+    usecase = GetTopRatedTVSeries(mockTVSeriesRepository);
   });
 
-  final tSeries = <TVSeries>[];
+  final tTVSeries = <TVSeries>[];
 
-  test('should get list of tv series from repository', () async {
+  test('should get list of TV Series from repository', () async {
     // arrange
-    when(mockTvSeriesRepository.getTopRatedTvSeries())
-        .thenAnswer((_) async => Right(tSeries));
+    when(mockTVSeriesRepository.getTopRatedTVSeries())
+        .thenAnswer((_) async => Right(tTVSeries));
     // act
     final result = await usecase.execute();
     // assert
-    expect(result, Right(tSeries));
+    expect(result, Right(tTVSeries));
   });
 }

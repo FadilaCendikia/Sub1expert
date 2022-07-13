@@ -1,11 +1,10 @@
 import 'package:ditonton/common/exception.dart';
-import 'package:ditonton/data/models/tv_series_table.dart';
 import 'package:ditonton/data/datasources/db/database_helper.dart';
-
+import 'package:ditonton/data/models/tv_series_table.dart';
 
 abstract class TVSeriesLocalDataSource {
-  Future<String> insertTVSeriesWatchlist(TVSeriesTable series);
-  Future<String> deleteTVSeriesWatchlist(TVSeriesTable series);
+  Future<String> addTVSeriesWatchlist(TVSeriesTable tvSeries);
+  Future<String> deleteTVSeriesWatchlist(TVSeriesTable tvSeries);
   Future<TVSeriesTable?> getTVSeriesById(int id);
   Future<List<TVSeriesTable>> getWatchlistTVSeries();
 }
@@ -16,36 +15,38 @@ class TVSeriesLocalDataSourceImpl implements TVSeriesLocalDataSource {
   TVSeriesLocalDataSourceImpl({required this.databaseHelper});
 
   @override
-  Future<TVSeriesTable?> getTVSeriesById(int id) async {
-    final result = await databaseHelper.getTVSeriesById(id);
-    if (result != null) {
-      return TVSeriesTable.fromMap(result);
-    } else{
-      return null;
-    }
-  }
-  @override
-  Future<List<TVSeriesTable>> getWatchlistTVSeries() async{
-    final result = await databaseHelper.getWatchlistTVSeries();
-    return result.map((data) => TVSeriesTable.fromMap(data)).toList();
-  }
-
-  @override
-  Future<String> insertTVSeriesWatchlist(TVSeriesTable series) async {
+  Future<String> addTVSeriesWatchlist(TVSeriesTable tvSeries) async {
     try {
-      await databaseHelper.insertTVSeriesWatchlist(series);
+      await databaseHelper.addTVSeriesWatchlist(tvSeries);
       return 'Added to Watchlist';
     } catch (e) {
       throw DatabaseException(e.toString());
     }
   }
- @override
-  Future<String> deleteTVSeriesWatchlist(TVSeriesTable series) async {
+
+  @override
+  Future<String> deleteTVSeriesWatchlist(TVSeriesTable tvSeries) async {
     try {
-      await databaseHelper.deleteTVSeriesWatchlist(series);
+      await databaseHelper.deleteTVSeriesWatchlist(tvSeries);
       return 'Removed from Watchlist';
     } catch (e) {
       throw DatabaseException(e.toString());
     }
+  }
+
+  @override
+  Future<TVSeriesTable?> getTVSeriesById(int id) async {
+    final result = await databaseHelper.getTVSeriesById(id);
+    if (result != null) {
+      return TVSeriesTable.fromMap(result);
+    } else {
+      return null;
+    }
+  }
+
+  @override
+  Future<List<TVSeriesTable>> getWatchlistTVSeries() async {
+    final result = await databaseHelper.getWatchlistTVSeries();
+    return result.map((data) => TVSeriesTable.fromMap(data)).toList();
   }
 }

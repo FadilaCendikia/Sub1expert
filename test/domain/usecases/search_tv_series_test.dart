@@ -1,4 +1,3 @@
-
 import 'package:dartz/dartz.dart';
 import 'package:ditonton/domain/entities/tv_series.dart';
 import 'package:ditonton/domain/usecases/search_tv_series.dart';
@@ -9,26 +8,23 @@ import '../../helpers/test_helper.mocks.dart';
 
 void main() {
   late SearchTVSeries usecase;
-  late MockTVSeriesRepository mockTvSeriesRepository;
+  late MockTVSeriesRepository mockTVSeriesRepository;
 
   setUp(() {
-    mockTvSeriesRepository = MockTVSeriesRepository();
-    usecase = SearchTVSeries(mockTvSeriesRepository);
+    mockTVSeriesRepository = MockTVSeriesRepository();
+    usecase = SearchTVSeries(mockTVSeriesRepository);
   });
 
-  final tSeries = <TVSeries>[];
-  final tQuery = 'Halo';
+  final tTVSeries = <TVSeries>[];
+  final tQuery = 'Spiderman';
 
-  test('should get list of tv series from the repository', () async {
+  test('should get list of movies from the repository', () async {
     // arrange
-    when(mockTvSeriesRepository.searchTVSeries(tQuery))
-        .thenAnswer((_) async => Right(tSeries));
+    when(mockTVSeriesRepository.searchTVSeries(tQuery))
+        .thenAnswer((_) async => Right(tTVSeries));
     // act
     final result = await usecase.execute(tQuery);
     // assert
-    expect(result, Right(tSeries));
+    expect(result, Right(tTVSeries));
   });
-}
-
-mixin MockTVSeriesRepository {
 }

@@ -2,53 +2,60 @@ import 'package:ditonton/domain/entities/season_tv_series.dart';
 import 'package:equatable/equatable.dart';
 
 class SeasonTVSeriesModel extends Equatable {
-  int id;
-  int episodeCount;
-  int seasonNumber;
-  String name;
-  String posterPath;
+  final String? airDate;
+  final int episodeCount;
+  final int id;
+  final String name;
+  final String overview;
+  final String? posterPath;
+  final int seasonNumber;
+  SeasonTVSeriesModel({
+    required this.airDate,
+    required this.episodeCount,
+    required this.id,
+    required this.name,
+    required this.overview,
+    required this.posterPath,
+    required this.seasonNumber,
+  });
 
-  SeasonTVSeriesModel(
-      {
-        required this.id,
-        required this.episodeCount,
-        required this.seasonNumber,
-        required this.name,
-        required this.posterPath,
-        });
-
-  factory SeasonTVSeriesModel.fromJson(Map<String, dynamic> json) => SeasonTVSeriesModel(
-      id: json["id"],
-      episodeCount: json["episode_count"],
-      seasonNumber: json["season_number"],
-      name: json["name"],
-      posterPath: json["poster_path"],
-  );
+  factory SeasonTVSeriesModel.fromJson(Map<String, dynamic> json) =>
+      SeasonTVSeriesModel(
+        airDate: json['air_date'],
+        episodeCount: json['episode_count'],
+        id: json['id'],
+        name: json['name'],
+        overview: json['overview'],
+        posterPath: json['poster_path'],
+        seasonNumber: json['season_number'],
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "episode_count": episodeCount,
-    "season_number": seasonNumber,
-    "name": name,
-    "poster_path": posterPath,
-  };
+        "air_date": airDate,
+        "episode_count": episodeCount,
+        "id": id,
+        "name": name,
+        "overview": overview,
+        "poster_path": posterPath,
+        "season_number": seasonNumber,
+      };
 
-  Season toEntity(){
-    return Season(
-      id: this.id,
-      episodeCount: this.episodeCount,
-      seasonNumber: this.seasonNumber,
-      name: this.name,
-      posterPath: this.posterPath,
-    );
-  }
+  Season toEntity() => Season(
+        id: this.id,
+        posterPath: this.posterPath,
+        seasonNumber: this.seasonNumber,
+        episodeCount: this.episodeCount,
+        name: this.name,
+      );
 
   @override
   List<Object?> get props => [
-    id,
-    episodeCount,
-    seasonNumber,
-    name,
-    posterPath,
-  ];
+        airDate,
+        episodeCount,
+        id,
+        name,
+        overview,
+        posterPath,
+        seasonNumber,
+      ];
 }

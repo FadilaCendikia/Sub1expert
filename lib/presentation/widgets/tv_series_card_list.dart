@@ -1,12 +1,13 @@
-import 'package:flutter/material.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ditonton/common/constants.dart';
 import 'package:ditonton/domain/entities/tv_series.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ditonton/presentation/pages/tv_series_detail_page.dart';
+import 'package:flutter/material.dart';
 
 class TVSeriesCard extends StatelessWidget {
-  TVSeriesCard(this.tvseries);
-  final TVSeries tvseries;
+  final TVSeries tvSeries;
+
+  TVSeriesCard(this.tvSeries);
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +18,7 @@ class TVSeriesCard extends StatelessWidget {
           Navigator.pushNamed(
             context,
             TVSeriesDetailPage.ROUTE_NAME,
-            arguments: tvseries.id,
+            arguments: tvSeries.id,
           );
         },
         child: Stack(
@@ -34,14 +35,14 @@ class TVSeriesCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      tvseries.name!,
+                      tvSeries.name ?? '-',
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: kHeading6,
                     ),
                     SizedBox(height: 16),
                     Text(
-                      tvseries.overview!,
+                      tvSeries.overview ?? '-',
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -56,7 +57,7 @@ class TVSeriesCard extends StatelessWidget {
               ),
               child: ClipRRect(
                 child: CachedNetworkImage(
-                  imageUrl: '$BASE_IMAGE_URL${tvseries.posterPath}',
+                  imageUrl: '$BASE_IMAGE_URL${tvSeries.posterPath}',
                   width: 80,
                   placeholder: (context, url) => Center(
                     child: CircularProgressIndicator(),

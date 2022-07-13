@@ -1,11 +1,12 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'dart:io';
-
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
+import 'dart:developer';
+
 import 'package:http/io_client.dart';
-class Shared{
+
+class Shared {
   static Future<HttpClient> customHttpClient({
     bool isTestMode = false,
   }) async {
@@ -22,10 +23,10 @@ class Shared{
           certFileBytes = (await rootBundle.load('certificates/certificates.cer'))
               .buffer
               .asInt8List();
-          log('Successfully access and load certificate.pem file!');
+          log('Successfully access and load certificates.cer file!');
         } catch (e) {
           certFileBytes = utf8.encode(_certificatedString);
-          log('Error access and load certificate.pem file.\n${e.toString()}');
+          log('Error access and load certificates.cer file.\n${e.toString()}');
         }
       }
 
@@ -52,10 +53,11 @@ class Shared{
 
   static Future<http.Client> createLEClient({bool isTestMode = false}) async {
     IOClient client =
-    IOClient(await Shared.customHttpClient(isTestMode: isTestMode));
+        IOClient(await Shared.customHttpClient(isTestMode: isTestMode));
     return client;
   }
 }
+
 const _certificatedString = """-----BEGIN CERTIFICATE-----
 MIIF5zCCBM+gAwIBAgIQAdKnBRs48TrGZbcfFRKNgDANBgkqhkiG9w0BAQsFADBG
 MQswCQYDVQQGEwJVUzEPMA0GA1UEChMGQW1hem9uMRUwEwYDVQQLEwxTZXJ2ZXIg

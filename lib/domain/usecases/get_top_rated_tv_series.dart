@@ -1,14 +1,14 @@
 import 'package:dartz/dartz.dart';
+import 'package:ditonton/common/failure.dart';
 import 'package:ditonton/domain/entities/tv_series.dart';
 import 'package:ditonton/domain/repositories/tv_series_repository.dart';
-import 'package:ditonton/common/failure.dart';
 
-class GetTopRatedTVSeries {
-  final TVSeriesRepository repository;
+class GetTopRatedTvSeries {
+  final TvSeriesRepository repository;
 
-  GetTopRatedTVSeries(this.repository);
+  GetTopRatedTvSeries(this.repository);
 
-  Future<Either<Failure, List<TVSeries>>> execute() {
-    return repository.getTopRatedTVSeries();
+  Future<Either<Failure, List<TvSeries>>> execute() {
+    return repository.getTopRatedTvSeries();
   }
 }

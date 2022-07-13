@@ -1,9 +1,8 @@
-import 'package:ditonton/common/state_enum.dart';
-import 'package:ditonton/presentation/movie_bloc/popular_movie_bloc.dart';
+import 'package:ditonton/presentation/bloc_movies/bloc/popular_movies_bloc.dart';
 import 'package:ditonton/presentation/widgets/movie_card_list.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 class PopularMoviesPage extends StatefulWidget {
   static const ROUTE_NAME = '/popular-movie';
 
@@ -16,7 +15,7 @@ class _PopularMoviesPageState extends State<PopularMoviesPage> {
   void initState() {
     super.initState();
     Future.microtask(() {
-      context.read<PopularMovieBloc>().add(OnPopularMovieShow());
+      context.read<PopularMoviesBloc>().add(OnPopularMoviesShow());
     });
   }
 
@@ -28,13 +27,13 @@ class _PopularMoviesPageState extends State<PopularMoviesPage> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: BlocBuilder<PopularMovieBloc, PopularMovieState>(
+        child: BlocBuilder<PopularMoviesBloc, PopularMoviesState>(
           builder: (context, state) {
-            if (state is PopularMovieLoading) {
+            if (state is PopularMoviesLoading) {
               return Center(
                 child: CircularProgressIndicator(),
               );
-            } else if (state is PopularMovieHasData) {
+            } else if (state is PopularMoviesHasData) {
               final result = state.result;
               return ListView.builder(
                 itemBuilder: (context, index) {
@@ -43,7 +42,7 @@ class _PopularMoviesPageState extends State<PopularMoviesPage> {
                 },
                 itemCount: result.length,
               );
-            } else if (state is PopularMovieError) {
+            } else if (state is PopularMoviesError) {
               return Center(
                 key: Key('error_message'),
                 child: Text(state.message),

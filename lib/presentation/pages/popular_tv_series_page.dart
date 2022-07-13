@@ -1,22 +1,21 @@
-import 'package:ditonton/common/state_enum.dart';
-import 'package:ditonton/presentation/tv_series_bloc/popular_tv_series_bloc.dart';
+import 'package:ditonton/presentation/bloc_tv_series/bloc/popular_tv_series_bloc.dart';
 import 'package:ditonton/presentation/widgets/tv_series_card_list.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-class PopularTVSeriesPage extends StatefulWidget {
+
+class PopularTvSeriesPage extends StatefulWidget {
   static const ROUTE_NAME = '/popular-tv-series';
 
   @override
-  _PopularTVSeriesPageState createState() => _PopularTVSeriesPageState();
+  _PopularTvSeriesPageState createState() => _PopularTvSeriesPageState();
 }
 
-class _PopularTVSeriesPageState extends State<PopularTVSeriesPage> {
+class _PopularTvSeriesPageState extends State<PopularTvSeriesPage> {
   @override
   void initState() {
     super.initState();
     Future.microtask(() {
-      context.read<PopularTVSeriesBloc>().add(OnPopularTVSeriesShow());
+      context.read<PopularTvSeriesBloc>().add(OnPopularTvSeriesShow());
     });
   }
 
@@ -24,26 +23,26 @@ class _PopularTVSeriesPageState extends State<PopularTVSeriesPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Popular TV Series'),
+        title: Text('Popular Movies'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: BlocBuilder<PopularTVSeriesBloc, PopularTVSeriesState>(
+        child: BlocBuilder<PopularTvSeriesBloc, PopularTvSeriesState>(
           builder: (context, state) {
-            if (state is PopularTVSeriesLoading) {
+            if (state is PopularTvSeriesLoading) {
               return Center(
                 child: CircularProgressIndicator(),
               );
-            } else if (state is PopularTVSeriesHasData) {
+            } else if (state is PopularTvSeriesHasData) {
               final result = state.result;
               return ListView.builder(
                 itemBuilder: (context, index) {
                   final tvSeries = result[index];
-                  return TVSeriesCard(tvSeries);
+                  return TvSeriesCard(tvSeries);
                 },
                 itemCount: result.length,
               );
-            } else if (state is PopularTVSeriesError) {
+            } else if (state is PopularTvSeriesError) {
               return Center(
                 key: Key('error_message'),
                 child: Text(state.message),

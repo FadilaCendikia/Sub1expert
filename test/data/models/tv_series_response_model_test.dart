@@ -5,36 +5,35 @@ import 'package:ditonton/data/models/tv_series_response.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../json_reader.dart';
-import '../../dummy_data/dummy_objects.dart';
 
 void main() {
-  final tTVSeriesModel = TVSeriesModel(
-    backdropPath: "/1qpUk27LVI9UoTS7S0EixUBj5aR.jpg",
-    firstAirDate: "2022-03-24",
-    genreIds: [10759, 10765],
-    id: 52814,
-    name: "Halo",
-    originCountry: ["US"],
-    originalLanguage: "en",
-    originalName: "Halo",
+  final tTvSeriesModel = TvSeriesModel(
+    backdropPath: "/9hp4JNejY6Ctg9i9ItkM9rd6GE7.jpg",
+    firstAirDate: "1997-09-13",
+    genreIds: [10764],
+    id: 12610,
+    name: "Robinson",
+    originCountry: ["SE"],
+    originalLanguage: "sv",
+    originalName: "Robinson",
     overview:
-        "Depicting an epic 26th-century conflict between humanity and an alien threat known as the Covenant, the series weaves deeply drawn personal stories with action, adventure and a richly imagined vision of the future.",
-    popularity: 7348.55,
-    posterPath: "/nJUHX3XL1jMkk8honUZnUmudFb9.jpg",
-    voteAverage: 8.7,
-    voteCount: 472,
+        "Expedition Robinson is a Swedish reality television program in which contestants are put into survival situations, and a voting process eliminates one person each episode until a winner is determined. The format was developed in 1994 by Charlie Parsons for a United Kingdom TV production company called Planet 24, but the Swedish debut in 1997 was the first production to actually make it to television.",
+    popularity: 2338.977,
+    posterPath: "/sWA0Uo9hkiAtvtjnPvaqfnulIIE.jpg",
+    voteAverage: 5,
+    voteCount: 3,
   );
-  final tTVSeriesResponseModel =
-      TVSeriesResponse(tvSeriesList: <TVSeriesModel>[tTVSeriesModel]);
+  final tTvSeriesResponseModel =
+      TvSeriesResponse(tvSeriesList: <TvSeriesModel>[tTvSeriesModel]);
   group('fromJson', () {
-    test('sould return valid model from JSON', () async {
-      //arrage
+    test('should return a valid model from JSON', () async {
+      // arrange
       final Map<String, dynamic> jsonMap =
-          json.decode(readJson('dummy_data/tv_series_on_the_air.json'));
-      //act
-      final result = TVSeriesResponse.fromJson(jsonMap);
-      //assert
-      expect(result, tTVSeriesResponseModel);
+          json.decode(readJson('dummy_data/tv_series_airing_today.json'));
+      // act
+      final result = TvSeriesResponse.fromJson(jsonMap);
+      // assert
+      expect(result, tTvSeriesResponseModel);
     });
   });
 
@@ -43,25 +42,25 @@ void main() {
       // arrange
 
       // act
-      final result = testTVSeriesResponse.toJson();
+      final result = tTvSeriesResponseModel.toJson();
       // assert
       final expectedJsonMap = {
         "results": [
           {
-            "backdrop_path": "/1qpUk27LVI9UoTS7S0EixUBj5aR.jpg",
-            "first_air_date": "2022-03-24",
-            "genre_ids": [10759, 10765],
-            "id": 52814,
-            "name": "Halo",
-            "origin_country": ["US"],
-            "original_language": "en",
-            "original_name": "Halo",
+            "backdrop_path": "/9hp4JNejY6Ctg9i9ItkM9rd6GE7.jpg",
+            "first_air_date": "1997-09-13",
+            "genre_ids": [10764],
+            "id": 12610,
+            "name": "Robinson",
+            "origin_country": ["SE"],
+            "original_language": "sv",
+            "original_name": "Robinson",
             "overview":
-                "Depicting an epic 26th-century conflict between humanity and an alien threat known as the Covenant, the series weaves deeply drawn personal stories with action, adventure and a richly imagined vision of the future.",
-            "popularity": 7348.55,
-            "poster_path": "/nJUHX3XL1jMkk8honUZnUmudFb9.jpg",
-            "vote_average": 8.7,
-            "vote_count": 472
+                "Expedition Robinson is a Swedish reality television program in which contestants are put into survival situations, and a voting process eliminates one person each episode until a winner is determined. The format was developed in 1994 by Charlie Parsons for a United Kingdom TV production company called Planet 24, but the Swedish debut in 1997 was the first production to actually make it to television.",
+            "popularity": 2338.977,
+            "poster_path": "/sWA0Uo9hkiAtvtjnPvaqfnulIIE.jpg",
+            "vote_average": 5,
+            "vote_count": 3
           }
         ],
       };

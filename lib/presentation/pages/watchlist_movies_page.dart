@@ -1,8 +1,7 @@
 import 'package:ditonton/common/utils.dart';
-import 'package:ditonton/presentation/movie_bloc/watchlist_movie_bloc.dart';
+import 'package:ditonton/presentation/bloc_movies/bloc/watchlist_movies_bloc.dart';
 import 'package:ditonton/presentation/widgets/movie_card_list.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class WatchlistMoviesPage extends StatefulWidget {
@@ -18,7 +17,7 @@ class _WatchlistMoviesPageState extends State<WatchlistMoviesPage>
   void initState() {
     super.initState();
     Future.microtask(() {
-      context.read<WatchlistMovieBloc>().add(OnWatchlistMovies());
+      context.read<WatchlistMoviesBloc>().add(OnWatchlistMovies());
     });
   }
 
@@ -29,18 +28,18 @@ class _WatchlistMoviesPageState extends State<WatchlistMoviesPage>
   }
 
   void didPopNext() {
-    context.read<WatchlistMovieBloc>().add(OnWatchlistMovies());
+    context.read<WatchlistMoviesBloc>().add(OnWatchlistMovies());
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Watchlist (Movie)'),
+        title: Text('Watchlist'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: BlocBuilder<WatchlistMovieBloc, WatchlistMovieState>(
+        child: BlocBuilder<WatchlistMoviesBloc, WatchlistMoviesState>(
           builder: (context, state) {
             if (state is WatchlistMoviesLoading) {
               return Center(
@@ -61,7 +60,7 @@ class _WatchlistMoviesPageState extends State<WatchlistMoviesPage>
                   ),
                 ],
               );
-            } else if (state is WatchlistMovieEmpty) {
+            } else if (state is WatchlistMoviesEmpty) {
               return Center(
                 child: Text("No watch list yet"),
               );

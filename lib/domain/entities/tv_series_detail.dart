@@ -1,19 +1,21 @@
 import 'package:ditonton/domain/entities/genre.dart';
-import 'package:ditonton/domain/entities/season_tv_series.dart';
+import 'package:ditonton/domain/entities/season.dart';
 import 'package:equatable/equatable.dart';
 
-class TVSeriesDetail extends Equatable {
-  TVSeriesDetail({
+class TvSeriesDetail extends Equatable {
+  TvSeriesDetail({
     required this.adult,
     required this.backdropPath,
     required this.genres,
     required this.id,
+    required this.lastAirDate,
     required this.name,
-    required this.overview,
-    required this.episodeRunTime,
-    required this.posterPath,
     required this.numberOfEpisodes,
     required this.numberOfSeasons,
+    required this.originalName,
+    required this.overview,
+    required this.popularity,
+    required this.posterPath,
     required this.seasons,
     required this.voteAverage,
     required this.voteCount,
@@ -21,15 +23,16 @@ class TVSeriesDetail extends Equatable {
 
   final bool adult;
   final String? backdropPath;
-
   final List<Genre> genres;
-  final List<int> episodeRunTime;
   final int id;
+  final String lastAirDate;
   final String name;
-  final String overview;
-  final String posterPath;
   final int numberOfEpisodes;
   final int numberOfSeasons;
+  final String originalName;
+  final String overview;
+  final double popularity;
+  final String posterPath;
   final List<Season> seasons;
   final double voteAverage;
   final int voteCount;
@@ -39,15 +42,17 @@ class TVSeriesDetail extends Equatable {
         adult,
         backdropPath,
         genres,
-        episodeRunTime,
         id,
+        lastAirDate,
         name,
-        overview,
-        posterPath,
         numberOfEpisodes,
         numberOfSeasons,
+        originalName,
+        overview,
+        popularity,
+        posterPath,
         seasons,
         voteAverage,
-        voteCount
+        voteCount,
       ];
 }

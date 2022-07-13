@@ -2,17 +2,16 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ditonton/common/constants.dart';
 import 'package:ditonton/domain/entities/genre.dart';
 import 'package:ditonton/domain/entities/movie_detail.dart';
-import 'package:ditonton/presentation/movie_bloc/detail_movie_bloc.dart';
-import 'package:ditonton/presentation/movie_bloc/recommendations_movie_bloc.dart';
-import 'package:ditonton/presentation/movie_bloc/watchlist_movie_bloc.dart';
+import 'package:ditonton/presentation/bloc_movies/bloc/detail_movies_bloc.dart';
+import 'package:ditonton/presentation/bloc_movies/bloc/recomendation_movies_bloc.dart';
+import 'package:ditonton/presentation/bloc_movies/bloc/watchlist_movies_bloc.dart';
 import 'package:ditonton/presentation/pages/watchlist_movies_page.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:provider/provider.dart';
 
 class MovieDetailPage extends StatefulWidget {
-  static const ROUTE_NAME = '/detail';
+  static const ROUTE_NAME = '/detail-movie';
 
   final int id;
   MovieDetailPage({required this.id});
@@ -26,30 +25,31 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
   void initState() {
     super.initState();
     Future.microtask(() {
-      context.read<DetailMovieBloc>().add(OnDetailMovieShow(widget.id));
+      context.read<DetailMoviesBloc>().add(OnDetailMoviesShow(widget.id));
       context
-          .read<RecommendationsMovieBloc>()
-          .add(OnRecommendationMovieShow(widget.id));
-      context.read<WatchlistMovieBloc>().add(WatchlistMovies(widget.id));
+          .read<RecomendationMoviesBloc>()
+          .add(OnRecomendationMoviesShow(widget.id));
+      context.read<WatchlistMoviesBloc>().add(WatchlistMovies(widget.id));
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    final watchlistStatus = context.select<WatchlistMovieBloc, bool>((value) {
+    final watchlistStatus = context.select<WatchlistMoviesBloc, bool>((value) {
       if (value.state is InsertWatchlist) {
         return (value.state as InsertWatchlist).status;
       }
       return false;
     });
+
     return Scaffold(
-      body: BlocBuilder<DetailMovieBloc, DetailMovieState>(
+      body: BlocBuilder<DetailMoviesBloc, DetailMoviesState>(
         builder: (context, state) {
-          if (state is DetailMovieLoading) {
+          if (state is DetailMoviesLoading) {
             return Center(
               child: CircularProgressIndicator(),
             );
-          } else if (state is DetailMovieHasData) {
+          } else if (state is DetailMoviesHasData) {
             final movie = state.result;
             return SafeArea(
               child: DetailContent(
@@ -57,9 +57,9 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
                 watchlistStatus,
               ),
             );
-          } else if (state is DetailMovieError) {
+          } else if (state is DetailMoviesError) {
             return Center(
-              child: Text(state.massage),
+              child: Text(state.message),
             );
           } else {
             return Container();
@@ -87,7 +87,7 @@ class _DetailContentState extends State<DetailContent> {
     return Stack(
       children: [
         CachedNetworkImage(
-          imageUrl: '$BASE_IMAGE_URL${widget.movie.posterPath}',
+          imageUrl: 'https://image.tmdb.org/t/p/w500${widget.movie.posterPath}',
           width: screenWidth,
           placeholder: (context, url) => Center(
             child: CircularProgressIndicator(),
@@ -125,17 +125,17 @@ class _DetailContentState extends State<DetailContent> {
                               onPressed: () async {
                                 if (!widget.isAddedWatchlist) {
                                   context
-                                      .read<WatchlistMovieBloc>()
+                                      .read<WatchlistMoviesBloc>()
                                       .add(InsertWatchlistMovies(widget.movie));
                                 } else {
                                   context
-                                      .read<WatchlistMovieBloc>()
+                                      .read<WatchlistMoviesBloc>()
                                       .add(DeleteWatchlistMovies(widget.movie));
                                 }
 
                                 final state =
-                                    BlocProvider.of<WatchlistMovieBloc>(
-                                        context)
+                                    BlocProvider.of<WatchlistMoviesBloc>(
+                                            context)
                                         .state;
                                 String message = "";
                                 String insertMessage = "Added to Watchlist";
@@ -182,7 +182,7 @@ class _DetailContentState extends State<DetailContent> {
 
                                 setState(() {
                                   widget.isAddedWatchlist =
-                                  !widget.isAddedWatchlist;
+                                      !widget.isAddedWatchlist;
                                 });
                               },
                               child: Row(
@@ -228,21 +228,21 @@ class _DetailContentState extends State<DetailContent> {
                               'Recommendations',
                               style: kHeading6,
                             ),
-                            BlocBuilder<RecommendationsMovieBloc,
-                                RecommendationsMovieState>(
+                            BlocBuilder<RecomendationMoviesBloc,
+                                RecomendationMoviesState>(
                               builder: (context, state) {
-                                if (state is RecommendationsMovieLoading) {
+                                if (state is RecomendationMoviesLoading) {
                                   return Center(
                                     child: CircularProgressIndicator(),
                                   );
-                                } else if (state is RecommendationsMovieError) {
+                                } else if (state is RecomendationMoviesError) {
                                   return Expanded(
                                     child: Center(
                                       child: Text(state.message),
                                     ),
                                   );
                                 } else if (state
-                                is RecommendationMovieHasData) {
+                                    is RecomendationMoviesHasData) {
                                   final result = state.result;
                                   return Container(
                                     height: 150,
@@ -266,15 +266,15 @@ class _DetailContentState extends State<DetailContent> {
                                               ),
                                               child: CachedNetworkImage(
                                                 imageUrl:
-                                                'https://image.tmdb.org/t/p/w500${movie.posterPath}',
+                                                    'https://image.tmdb.org/t/p/w500${movie.posterPath}',
                                                 placeholder: (context, url) =>
                                                     Center(
-                                                      child:
+                                                  child:
                                                       CircularProgressIndicator(),
-                                                    ),
+                                                ),
                                                 errorWidget:
                                                     (context, url, error) =>
-                                                    Icon(Icons.error),
+                                                        Icon(Icons.error),
                                               ),
                                             ),
                                           ),

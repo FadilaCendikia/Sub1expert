@@ -7,28 +7,28 @@ import 'package:mockito/mockito.dart';
 import '../../helpers/test_helper.mocks.dart';
 
 void main() {
-  late GetPopularTVSeries usecase;
-  late MockTVSeriesRepository mockTVSeriesRepository;
+  late GetPopularTvSeries usecase;
+  late MockTvSeriesRepository mockTvSeriesRepository;
 
   setUp(() {
-    mockTVSeriesRepository = MockTVSeriesRepository();
-    usecase = GetPopularTVSeries(mockTVSeriesRepository);
+    mockTvSeriesRepository = MockTvSeriesRepository();
+    usecase = GetPopularTvSeries(mockTvSeriesRepository);
   });
 
-  final tTVSeries = <TVSeries>[];
+  final tTvSeries = <TvSeries>[];
 
-  group('GetPopularTVSeries Tests', () {
+  group('GetPopularTvSeries Tests', () {
     group('execute', () {
       test(
-          'should get list of TV Series from the repository when execute function is called',
+          'should get list of tv series from the repository when execute function is called',
           () async {
         // arrange
-        when(mockTVSeriesRepository.getPopularTVSeries())
-            .thenAnswer((_) async => Right(tTVSeries));
+        when(mockTvSeriesRepository.getPopularTvSeries())
+            .thenAnswer((_) async => Right(tTvSeries));
         // act
         final result = await usecase.execute();
         // assert
-        expect(result, Right(tTVSeries));
+        expect(result, Right(tTvSeries));
       });
     });
   });

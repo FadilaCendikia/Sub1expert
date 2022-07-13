@@ -1,15 +1,15 @@
 import 'package:ditonton/data/models/tv_series_model.dart';
 import 'package:equatable/equatable.dart';
 
-class TVSeriesResponse extends Equatable {
-  final List<TVSeriesModel> tvSeriesList;
+class TvSeriesResponse extends Equatable {
+  final List<TvSeriesModel> tvSeriesList;
 
-  TVSeriesResponse({required this.tvSeriesList});
+  TvSeriesResponse({required this.tvSeriesList});
 
-  factory TVSeriesResponse.fromJson(Map<String, dynamic> json) =>
-      TVSeriesResponse(
-        tvSeriesList: List<TVSeriesModel>.from((json["results"] as List)
-            .map((x) => TVSeriesModel.fromJson(x))
+  factory TvSeriesResponse.fromJson(Map<String, dynamic> json) =>
+      TvSeriesResponse(
+        tvSeriesList: List<TvSeriesModel>.from((json["results"] as List)
+            .map((x) => TvSeriesModel.fromJson(x))
             .where((element) => element.posterPath != null)),
       );
 

@@ -4,10 +4,10 @@ import 'package:ditonton/domain/entities/tv_series.dart';
 import 'package:ditonton/presentation/pages/tv_series_detail_page.dart';
 import 'package:flutter/material.dart';
 
-class TVSeriesCard extends StatelessWidget {
-  final TVSeries tvSeries;
+class TvSeriesCard extends StatelessWidget {
+  final TvSeries tvSeries;
 
-  TVSeriesCard(this.tvSeries);
+  TvSeriesCard(this.tvSeries);
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +17,7 @@ class TVSeriesCard extends StatelessWidget {
         onTap: () {
           Navigator.pushNamed(
             context,
-            TVSeriesDetailPage.ROUTE_NAME,
+            TvSeriesDetailPage.ROUTE_NAME,
             arguments: tvSeries.id,
           );
         },

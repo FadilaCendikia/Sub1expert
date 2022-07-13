@@ -1,87 +1,94 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ditonton/common/constants.dart';
+import 'package:ditonton/domain/entities/tv_series.dart';
+import 'package:ditonton/presentation/bloc_tv_series/bloc/airing_today_tv_series_bloc.dart';
+import 'package:ditonton/presentation/bloc_tv_series/bloc/popular_tv_series_bloc.dart';
+import 'package:ditonton/presentation/bloc_tv_series/bloc/top_rated_tv_series_bloc.dart';
 import 'package:ditonton/presentation/pages/about_page.dart';
-import 'package:ditonton/presentation/pages/home_movie_page.dart';
 import 'package:ditonton/presentation/pages/popular_tv_series_page.dart';
 import 'package:ditonton/presentation/pages/search_tv_series_page.dart';
 import 'package:ditonton/presentation/pages/top_rated_tv_series_page.dart';
-import 'package:ditonton/presentation/pages/watchlist_tv_series_page.dart';
-import 'package:ditonton/presentation/tv_series_bloc/airing_today_tv_series_bloc.dart';
-import 'package:ditonton/presentation/tv_series_bloc/popular_tv_series_bloc.dart';
-import 'package:ditonton/presentation/tv_series_bloc/top_rated_tv_series_bloc.dart';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ditonton/presentation/pages/tv_series_detail_page.dart';
-import 'package:ditonton/domain/entities/tv_series.dart';
+import 'package:ditonton/presentation/pages/watchlist_movies_page.dart';
+import 'package:ditonton/presentation/pages/watchlist_tv_series_page.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class HomeTVSeriesPage extends StatefulWidget {
-  static const ROUTE_NAME = '/tv_series';
+class HomeTvSeriesPage extends StatefulWidget {
+  static const ROUTE_NAME = '/home-tv-series';
+
   @override
-  _HomeTVSeriesPageState createState() => _HomeTVSeriesPageState();
+  _HomeTvSeriesPageState createState() => _HomeTvSeriesPageState();
 }
-class _HomeTVSeriesPageState extends State<HomeTVSeriesPage> {
+
+class _HomeTvSeriesPageState extends State<HomeTvSeriesPage> {
   @override
   void initState() {
     super.initState();
+
     Future.microtask(() {
-      context.read<AiringTodayTVSeriesBloc>().add(OnAiringTodayTvSeriesShow());
-      context.read<PopularTVSeriesBloc>().add(OnPopularTVSeriesShow());
-      context.read<TopRatedTVSeriesBloc>().add(OnTopRatedTVSeriesShow());
+      context.read<AiringTodayTvSeriesBloc>().add(OnAiringTodayTvSeriesShow());
+      context.read<PopularTvSeriesBloc>().add(OnPopularTvSeriesShow());
+      context.read<TopRatedTvSeriesBloc>().add(OnTopRatedTvSeriesShow());
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-     drawer: Drawer(
-       child: Column(
-         children: [
-           UserAccountsDrawerHeader(
-             currentAccountPicture: CircleAvatar(
-               backgroundImage: AssetImage('assets/circle-g.png'),
-             ),
-             accountName: Text('Ditonton'),
-             accountEmail: Text('ditonton@dicoding.com'),
-           ),
-           ListTile(
-             leading: Icon(Icons.movie),
-             title: Text('Movies'),
-             onTap: () {
-               Navigator.pushNamed(context, HomeMoviePage.ROUTE_NAME);
-             },
-           ),
-           ListTile(
-             leading: Icon(Icons.tv_rounded),
-             title: Text('Tv Series'),
-             onTap: () {
-               Navigator.pop(context);
-             },
-           ),
-           ListTile(
-               leading: Icon(Icons.save_alt),
-               title: Text('Watchlist'),
-               onTap: () {
-                 Navigator.pushNamed(context, WatchlistTVSeriesPage.ROUTE_NAME);
-               }
-           ),
-           ListTile(
-             onTap: () {
-               Navigator.pushNamed(context, AboutPage.ROUTE_NAME);
-             },
-             leading: Icon(Icons.info_outline),
-             title: Text('About'),
-           ),
-         ],
-       ),
-     ),
+      drawer: Drawer(
+        child: Column(
+          children: [
+            UserAccountsDrawerHeader(
+              currentAccountPicture: CircleAvatar(
+                backgroundImage: AssetImage('assets/circle-g.png'),
+              ),
+              accountName: Text('Ditonton'),
+              accountEmail: Text('ditonton@dicoding.com'),
+            ),
+            ListTile(
+              leading: Icon(Icons.movie),
+              title: Text('Movies'),
+              onTap: () {
+                Navigator.pushReplacementNamed(context, '/home');
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.tv),
+              title: Text('TV Series'),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.save_alt),
+              title: Text('Watchlist Movies'),
+              onTap: () {
+                Navigator.pushNamed(context, WatchlistMoviesPage.ROUTE_NAME);
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.save_alt),
+              title: Text('Watchlist TV Series'),
+              onTap: () => Navigator.pushNamed(
+                  context, WatchlistTvSeriesPage.ROUTE_NAME),
+            ),
+            ListTile(
+              onTap: () {
+                Navigator.pushNamed(context, AboutPage.ROUTE_NAME);
+              },
+              leading: Icon(Icons.info_outline),
+              title: Text('About'),
+            ),
+          ],
+        ),
+      ),
       appBar: AppBar(
-        title: Text('Ditonton (TV Series)'),
+        title: Text('Ditonton'),
         actions: [
           IconButton(
-            onPressed: () {
-              Navigator.pushNamed(context, SearchTVSeriesPage.ROUTE_NAME);
-            },
+            onPressed: () =>
+                Navigator.pushNamed(context, SearchTvSeriesPage.ROUTE_NAME),
             icon: Icon(Icons.search),
           )
         ],
@@ -93,19 +100,19 @@ class _HomeTVSeriesPageState extends State<HomeTVSeriesPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'On The Air Now',
+                'Airing Today',
                 style: kHeading6,
               ),
-              BlocBuilder<AiringTodayTVSeriesBloc, AiringTodayTVSeriesState>(
+              BlocBuilder<AiringTodayTvSeriesBloc, AiringTodayTvSeriesState>(
                 builder: (context, state) {
-                  if (state is AiringTodayTVSeriesLoading) {
+                  if (state is AiringTodayTvSeriesLoading) {
                     return Center(
                       child: CircularProgressIndicator(),
                     );
-                  } else if (state is AiringTodayTVSeriesHasData) {
+                  } else if (state is AiringTodayTvSeriesHasData) {
                     final data = state.result;
-                    return TVSeriesList(data);
-                  } else if (state is AiringTodayTVSeriesError) {
+                    return TvSeriesList(data);
+                  } else if (state is AiringTodayTvSeriesError) {
                     return Center(
                       child: Text(state.message),
                     );
@@ -117,18 +124,18 @@ class _HomeTVSeriesPageState extends State<HomeTVSeriesPage> {
               _buildSubHeading(
                 title: 'Popular',
                 onTap: () => Navigator.pushNamed(
-                    context, PopularTVSeriesPage.ROUTE_NAME),
+                    context, PopularTvSeriesPage.ROUTE_NAME),
               ),
-              BlocBuilder<PopularTVSeriesBloc, PopularTVSeriesState>(
+              BlocBuilder<PopularTvSeriesBloc, PopularTvSeriesState>(
                 builder: (context, state) {
-                  if (state is PopularTVSeriesLoading) {
+                  if (state is PopularTvSeriesLoading) {
                     return Center(
                       child: CircularProgressIndicator(),
                     );
-                  } else if (state is PopularTVSeriesHasData) {
+                  } else if (state is PopularTvSeriesHasData) {
                     final data = state.result;
-                    return TVSeriesList(data);
-                  } else if (state is PopularTVSeriesError) {
+                    return TvSeriesList(data);
+                  } else if (state is PopularTvSeriesError) {
                     return Center(
                       child: Text(state.message),
                     );
@@ -140,18 +147,18 @@ class _HomeTVSeriesPageState extends State<HomeTVSeriesPage> {
               _buildSubHeading(
                 title: 'Top Rated',
                 onTap: () => Navigator.pushNamed(
-                    context, TopRatedTVSeriesPage.ROUTE_NAME),
+                    context, TopRatedTvSeriesPage.ROUTE_NAME),
               ),
-              BlocBuilder<TopRatedTVSeriesBloc, TopRatedTVSeriesState>(
+              BlocBuilder<TopRatedTvSeriesBloc, TopRatedTvSeriesState>(
                 builder: (context, state) {
-                  if (state is TopRatedTVSeriesLoading) {
+                  if (state is TopRatedTvSeriesLoading) {
                     return Center(
                       child: CircularProgressIndicator(),
                     );
-                  } else if (state is TopRatedTVSeriesHasData) {
+                  } else if (state is TopRatedTvSeriesHasData) {
                     final data = state.result;
-                    return TVSeriesList(data);
-                  } else if (state is TopRatedTVSeriesError) {
+                    return TvSeriesList(data);
+                  } else if (state is TopRatedTvSeriesError) {
                     return Center(
                       child: Text(state.message),
                     );
@@ -188,10 +195,11 @@ class _HomeTVSeriesPageState extends State<HomeTVSeriesPage> {
     );
   }
 }
-class TVSeriesList extends StatelessWidget {
-  final List<TVSeries> tvSeries;
 
-  TVSeriesList(this.tvSeries);
+class TvSeriesList extends StatelessWidget {
+  final List<TvSeries> tvSeriess;
+
+  TvSeriesList(this.tvSeriess);
 
   @override
   Widget build(BuildContext context) {
@@ -200,21 +208,21 @@ class TVSeriesList extends StatelessWidget {
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
-          final atvSeries = tvSeries[index];
+          final tvSeries = tvSeriess[index];
           return Container(
             padding: const EdgeInsets.all(8),
             child: InkWell(
               onTap: () {
                 Navigator.pushNamed(
                   context,
-                  TVSeriesDetailPage.ROUTE_NAME,
-                  arguments: atvSeries.id,
+                  TvSeriesDetailPage.ROUTE_NAME,
+                  arguments: tvSeries.id,
                 );
               },
               child: ClipRRect(
                 borderRadius: BorderRadius.all(Radius.circular(16)),
                 child: CachedNetworkImage(
-                  imageUrl: '$BASE_IMAGE_URL${atvSeries.posterPath}',
+                  imageUrl: '$BASE_IMAGE_URL${tvSeries.posterPath}',
                   placeholder: (context, url) => Center(
                     child: CircularProgressIndicator(),
                   ),
@@ -224,7 +232,7 @@ class TVSeriesList extends StatelessWidget {
             ),
           );
         },
-        itemCount: tvSeries.length,
+        itemCount: tvSeriess.length,
       ),
     );
   }

@@ -1,12 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ditonton/common/constants.dart';
+import 'package:ditonton/presentation/pages/watchlist_movies_page.dart';
 import 'package:ditonton/domain/entities/genre.dart';
-import 'package:ditonton/domain/entities/movie_detail.dart';
 import 'package:ditonton/presentation/bloc_movies/bloc/detail_movies_bloc.dart';
 import 'package:ditonton/presentation/bloc_movies/bloc/recomendation_movies_bloc.dart';
 import 'package:ditonton/presentation/bloc_movies/bloc/watchlist_movies_bloc.dart';
-import 'package:ditonton/presentation/pages/watchlist_movies_page.dart';
 import 'package:flutter/material.dart';
+import 'package:ditonton/domain/entities/movie_detail.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 

@@ -1,17 +1,17 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ditonton/common/constants.dart';
 import 'package:ditonton/domain/entities/movie.dart';
-import 'package:ditonton/presentation/bloc_movies/bloc/now_playing_movies_bloc.dart';
-import 'package:ditonton/presentation/bloc_movies/bloc/popular_movies_bloc.dart';
-import 'package:ditonton/presentation/bloc_movies/bloc/top_rated_movies_bloc.dart';
 import 'package:ditonton/presentation/pages/about_page.dart';
 import 'package:ditonton/presentation/pages/home_tv_series_page.dart';
 import 'package:ditonton/presentation/pages/movie_detail_page.dart';
+import 'package:ditonton/presentation/pages/watchlist_movies_page.dart';
+import 'package:ditonton/presentation/pages/watchlist_tv_series_page.dart';
 import 'package:ditonton/presentation/pages/popular_movies_page.dart';
 import 'package:ditonton/presentation/pages/search_movie_page.dart';
 import 'package:ditonton/presentation/pages/top_rated_movies_page.dart';
-import 'package:ditonton/presentation/pages/watchlist_movies_page.dart';
-import 'package:ditonton/presentation/pages/watchlist_tv_series_page.dart';
+import 'package:ditonton/presentation/bloc_movies/bloc/now_playing_movies_bloc.dart';
+import 'package:ditonton/presentation/bloc_movies/bloc/popular_movies_bloc.dart';
+import 'package:ditonton/presentation/bloc_movies/bloc/top_rated_movies_bloc.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -28,8 +28,8 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
 
     Future.microtask(() {
       context.read<NowPlayingMoviesBloc>().add(OnNowPlayingMoviesShow());
-      context.read<PopularMoviesBloc>().add(OnPopularMoviesShow());
       context.read<TopRatedMoviesBloc>().add(OnTopRatedMoviesShow());
+      context.read<PopularMoviesBloc>().add(OnPopularMoviesShow());
     });
   }
 
